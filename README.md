@@ -42,7 +42,7 @@ python train_cnn.py predict --model_dir=/path/to/save/model/ --input=/path/to/im
 ```
 
 
-#### keras_transfer_learning_version
+### eras_transfer_learning_version
 
 *   #### preprocess
 
