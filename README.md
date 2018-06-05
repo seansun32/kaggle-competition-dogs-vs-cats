@@ -21,7 +21,7 @@ with xception model, which acheives 96% validation accuracy
 python write_tfrecord.py train --stc_dir=/dir/to/train/img/ --dis_dir=/path/to/tfrecord/
 
 #convert test images to test_tfrecords
-python write_tfrecord.py train --stc_dir=/dir/to/test/img/ --dis_dir=/path/to/tfrecord/
+python write_tfrecord.py test --stc_dir=/dir/to/test/img/ --dis_dir=/path/to/tfrecord/
 ```
 
 
