@@ -1,5 +1,5 @@
 # kaggle-competition-dogs-vs-cats
-my code for kaggle competition dogs-vs-cats
+my code for [kaggle competition dogs-vs-cats](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition)
 
 ## description
 two implementation for kaggle competition dogs-vs-cats
