@@ -10,11 +10,11 @@ which achieves 84% validation accuracy because of non-deep model
 *   keras_transfer_learning_version uses keras api and transfering
 with xception model, which acheives 96% validation accuracy
 
-### usage
+## usage
 
-#### tensorflow_version
+### tensorflow_version
 
-*   ##### convert images to tfrecord file
+*   #### convert images to tfrecord file
 
 ```python
 #convert train images to train_tfrecords and validation_tfrecords
@@ -25,7 +25,7 @@ python write_tfrecord.py train --stc_dir=/dir/to/test/img/ --dis_dir=/path/to/tf
 ```
 
 
-*   ##### run model
+*   #### run model
 
 ```python
 #train model, --step means how many steps you wanna train
@@ -44,14 +44,14 @@ python train_cnn.py predict --model_dir=/path/to/save/model/ --input=/path/to/im
 
 #### keras_transfer_learning_version
 
-*   ##### preprocess
+*   #### preprocess
 
 ```python
 #move train images to cat/ and dog/ dirs
 python preprocess.py --data_dir=/path/to/datasets
 ```
 
-*   ##### run modeel
+*   #### run model
 
 ```python
 #train model
