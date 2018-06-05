@@ -14,6 +14,13 @@ DROPOUT=0.25
 
 
 #--------------input function---------
+def parse_image(file_name):
+    img=cv2.imread(file_name)
+    img=cv2.resize(img,(299,299),interpolation=cv2.INTER_CUBIC)
+    img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+    img=img.astype(np.float32)
+    return img
+
 def train_parse_record(raw_record):
     features=tf.parse_single_example(
             raw_record,
@@ -35,7 +42,7 @@ def test_parse_record(raw_record):
     images=tf.decode_raw(features['image'],tf.float32)
     index=tf.cast(features['idx'],tf.int32)
 
-    return {'image':image,'idx':index}
+    return {'image':images,'idx':index}
 
 
 def input_fn(file_name,batch_size,num_epochs=5,num_parallel_calls=1):
@@ -59,7 +66,7 @@ def validation_input_fn(file_path):
 
 def test_input_fn(file_path):
     dataset=tf.data.TFRecordDataset(file_path)
-    dataset=dataset.map(lambda value:test_parse_record(value,0),
+    dataset=dataset.map(lambda value:test_parse_record(value),
                         num_parallel_calls=1)
 
     dataset=dataset.batch(1)
@@ -71,12 +78,11 @@ def test_input_fn(file_path):
 def predict_input_fn(file_name):
 
     img=parse_image(file_name)
-    x={'image':np.array([img])}
+    x={'image':np.array([img]),'idx':[0]}
     dataset=tf.data.Dataset.from_tensor_slices(x)
     dataset=dataset.batch(1)
     iterator=dataset.make_one_shot_iterator()
     one_element=iterator.get_next()
-    
     
     return one_element
 
@@ -191,19 +197,20 @@ if __name__=='__main__':
                 label=result['classes']
                 prob=result['probabilities'][0]
 
-                f.write('{},{}]n'.format(index,prob))
+                f.write('{},{}\n'.format(index,prob))
 
     elif args.command=='predict':
         #pass
         results=model.predict(input_fn=lambda:predict_input_fn(args.input))
-        label=result['classes']
-        prob=result['probabilities']
-        img=result['features']
-        
-        if label==0:
-            print('The picture is a dog')
-        else:
-            print('The picture is a cat')
+        for result in results:
+            label=result['classes']
+            prob=result['probabilities']
+            img=result['features']
+            print("prob:",prob) 
+            if label==0:
+                print('The picture is a dog')
+            else:
+                print('The picture is a cat')
 
 
 
